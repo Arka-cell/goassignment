@@ -17,7 +17,11 @@ import (
 
 func (server *Server) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	// writing code for file upload
-
+	err := auth.TokenValid(r)
+	if err != nil {
+		responses.ERROR(w, http.StatusUnauthorized, err)
+		return
+	}
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
@@ -40,6 +44,7 @@ func (server *Server) CreateProduct(w http.ResponseWriter, r *http.Request) {
 		responses.ERROR(w, http.StatusUnauthorized, errors.New("Unauthorized"))
 		return
 	}
+
 	if uid != product.ShopID {
 		responses.ERROR(w, http.StatusUnauthorized, errors.New(http.StatusText(http.StatusUnauthorized)))
 		return
