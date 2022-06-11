@@ -18,7 +18,7 @@ type Shop struct {
 	Name        string    `gorm:"size:255;not null;unique" json:"name"`
 	Email       string    `gorm:"size:100;not null;unique" json:"email"`
 	PhoneNumber string    `gorm:"size:50;unique" json:"phone_number"`
-	Password    string    `gorm:"size:100;not null;" json:"password"`
+	Password    string    `gorm:"size:100;not null;" json:"-"`
 	CreatedAt   time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt   time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
 }
@@ -109,7 +109,9 @@ func (shop *Shop) SaveShop(db *gorm.DB) (*Shop, error) {
 func (shop *Shop) FindAllShops(db *gorm.DB) (*[]Shop, error) {
 	var err error
 	shops := []Shop{}
-	err = db.Debug().Model(&Shop{}).Limit(100).Find(&shops).Error
+	// db.Select("id", "name", "email", "phone_number").Find(&shops)
+	println(shops)
+	err = db.Debug().Select([]string{"name", "id", "email", "phone_number"}).Model(&Shop{}).Limit(100).Find(&shops).Error
 	if err != nil {
 		return &[]Shop{}, err
 	}
