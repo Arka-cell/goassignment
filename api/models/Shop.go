@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 	"html"
 	"log"
 	"strings"
@@ -49,6 +50,7 @@ func (shop *Shop) Prepare() {
 }
 
 func (shop *Shop) Validate(action string) error {
+	fmt.Println("Validating Shop with action:", action)
 	switch strings.ToLower(action) {
 	case "update":
 		if shop.Name == "" {
