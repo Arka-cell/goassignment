@@ -3,8 +3,8 @@ import requests
 URL = "http://localhost:8080/login"
 
 data = {
-    "email": "samir@email.com",
-    "password": "I am here",
+    "email": "samir@email2.com",
+    "password": "Iamhere",
 }
 
 res = requests.post(URL, json=data)

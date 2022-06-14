@@ -10,6 +10,6 @@ res = requests.get("http://localhost:8080/shops")
 print(res.status_code)
 print(res.content)
 
-res = requests.get("http://localhost:8080/shops/4")
+res = requests.get("http://localhost:8080/shops/5")
 print(res.status_code)
 print(res.content)

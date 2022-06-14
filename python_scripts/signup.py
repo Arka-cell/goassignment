@@ -3,10 +3,10 @@ import requests
 URL = "http://localhost:8080/signup"
 
 data = {
-    "name": "Samirs shop",
-    "email": "samir@email.com",
-    "password": "I am here",
-    "phone_number": "+213795524594"
+    "name": "Michele ",
+    "email": "michele@email.com",
+    "password": "Iamhere",
+    "phone_number": "+213795524593"
 }
 
 res = requests.post(URL, json=data)
