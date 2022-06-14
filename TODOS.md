@@ -17,6 +17,7 @@ go get gopkg.in/go-playground/assert.v1
 2. File upload to Firebase Storage can be done, but needs golang version to be `<=1.17`. Currently, I am having a problem with my WSL2 environement, I'll get to it as I have more time. 
 3. User table and controllers; representing Customer is still not implemented.
 4. Purchases table and controller; representing the products that the User purchased is still not implemented.
+5. Shops can retrieve only their products too.
 
 ## Tests that aren't done:
 1. Nothing has been tested until now, the python scripts are able to test the API but are neither consistent nor scalable for more complexity.
