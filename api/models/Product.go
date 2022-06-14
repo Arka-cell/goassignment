@@ -11,11 +11,11 @@ import (
 
 type Product struct {
 	ID          uint64    `gorm:"primary_key;auto_increment" json:"id"`
-	Title       string    `gorm:"size:255;not null;unique" json:"title"`
-	Description string    `gorm:"size:255;not null;" json:"description"`
-	Shop        Shop      `json:"shop"`
-	ShopID      uint32    `gorm:"not null" json:"shop_id"`
-	ImageUrl    string    `gorm:"size: 255;" json:"image_url"`
+	Title       string    `gorm:"size:255;not null;" json:"title,omitempty" bson:",omitempty"`
+	Description string    `gorm:"size:255;not null;" json:"description,omitempty" bson:",omitempty"`
+	Shop        Shop      `json:"-"`
+	ShopID      uint32    `gorm:"not null" json:"shop_id,omitempty" bson:",omitempty"`
+	ImageUrl    string    `gorm:"size: 255;" json:"image_url,omitempty" bson:",omitempty"`
 	CreatedAt   time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt   time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
 }
@@ -29,18 +29,21 @@ func (p *Product) Prepare() {
 	p.UpdatedAt = time.Now()
 }
 
-func (p *Product) Validate() error {
-
-	if p.Title == "" {
-		return errors.New("Required Title")
-	}
-	if p.Description == "" {
-		return errors.New("Required Description")
-	}
-	if p.ShopID < 1 {
-		return errors.New("Required Shop")
+func (p *Product) Validate(params ...int) error {
+	if params == nil {
+		if p.Title == "" {
+			return errors.New("Required Title")
+		}
+		if p.Description == "" {
+			return errors.New("Required Description")
+		}
+		if p.ShopID < 1 {
+			return errors.New("Required Shop")
+		}
+		return nil
 	}
 	return nil
+
 }
 
 func (p *Product) SaveProduct(db *gorm.DB) (*Product, error) {
