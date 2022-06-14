@@ -90,7 +90,6 @@ func (server *Server) GetProduct(w http.ResponseWriter, r *http.Request) {
 }
 
 func (server *Server) UpdateProduct(w http.ResponseWriter, r *http.Request) {
-
 	vars := mux.Vars(r)
 
 	// Check if the product id is valid
@@ -142,7 +141,7 @@ func (server *Server) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	}
 
 	productUpdate.Prepare()
-	err = productUpdate.Validate()
+	err = productUpdate.Validate(1)
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
 		return
